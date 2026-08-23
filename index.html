@@ -105,15 +105,18 @@
     background-size:200% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
     animation:shimmer 5s linear infinite;
   }
+  nav{display:flex; align-items:center; gap:10px;}
   nav button{
     background:none; border:1px solid var(--glass-border); color:var(--muted);
     padding:8px 14px; border-radius:20px; font-size:13px; cursor:pointer; font-weight:600;
     transition:.2s;
   }
   nav button.active{color:var(--bg); background:var(--cyan); border-color:var(--cyan);}
+  .nav-utils{display:flex; align-items:center; gap:6px;}
+  #navHistory, #themeToggle{padding:5px 10px; font-size:11px; border-radius:14px;}
   main{max-width:520px; margin:0 auto; padding:24px 16px; flex:1 0 auto; width:100%;}
   .glass{
-    background:var(--glass); border:1px solid var(--glass-border); border-radius:18px;
+    background:var(--glass); border:1px solid var(--glass-border); border-radius:var(--card-radius, 18px);
     padding:20px; backdrop-filter:blur(10px); margin-bottom:16px;
     position:relative; overflow:hidden;
     animation:riseIn .45s ease both;
@@ -155,6 +158,20 @@
     background:linear-gradient(135deg,var(--cyan),var(--rose)); color:#06090d; border-color:transparent;
     transform:scale(1.06); box-shadow:0 4px 14px rgba(0,217,255,0.25);
   }
+  .chip-disabled{
+    opacity:.35; cursor:not-allowed; text-decoration:line-through;
+    background:#080a0e !important;
+  }
+  .chip-blocked{
+    background:rgba(255,84,112,0.15) !important; border-color:rgba(255,84,112,0.4) !important;
+    color:var(--red) !important; font-weight:700;
+  }
+  .widget-card{
+    padding:14px 16px; border-color:rgba(255,111,174,0.3);
+    background:linear-gradient(135deg, rgba(0,217,255,0.06), rgba(255,111,174,0.06));
+  }
+  .widget-title{font-weight:800; font-size:14px; margin-bottom:4px; color:var(--text);}
+  .widget-text{font-size:13px; color:var(--muted);}
   .btn{
     width:100%; margin-top:20px; padding:15px; border:none; border-radius:12px;
     background:linear-gradient(135deg,var(--cyan),var(--rose)); color:#06090d; font-weight:800;
@@ -183,6 +200,37 @@
   .landing-card{text-align:center; padding:34px 22px;}
   .landing-sub{color:var(--muted); font-size:13px; margin:8px 0 4px;}
   .landing-card .btn{margin-top:18px;}
+  .rating-badge{
+    display:flex; align-items:center; gap:8px; padding:12px 16px; cursor:pointer;
+    font-size:13px; color:var(--text);
+  }
+  .rating-badge #ratingStars{color:var(--cyan); letter-spacing:1px;}
+  .rating-text{color:var(--muted); flex:1;}
+  .rating-arrow{color:var(--muted); font-size:18px;}
+  .hidden{display:none !important;}
+  .review-modal{
+    position:fixed; inset:0; z-index:50; background:rgba(4,6,10,0.72);
+    backdrop-filter:blur(6px); display:flex; align-items:flex-end; justify-content:center;
+  }
+  .review-modal-inner{
+    width:100%; max-width:520px; max-height:82vh; overflow-y:auto;
+    border-radius:22px 22px 0 0; padding:20px; margin-bottom:0;
+    animation:riseIn .3s ease both;
+  }
+  .review-modal-head{display:flex; justify-content:space-between; align-items:center;}
+  .review-modal-head h3{font-family:'Orbitron'; font-size:15px;}
+  .review-summary{text-align:center; padding:12px 0 6px;}
+  .review-list{max-height:220px; overflow-y:auto; margin:10px 0;}
+  .review-item{padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.06);}
+  .review-item-top{display:flex; justify-content:space-between; align-items:center;}
+  .review-name{font-weight:700; font-size:13px;}
+  .review-stars{color:var(--cyan); font-size:13px;}
+  .review-text{font-size:13px; color:var(--muted); margin-top:4px;}
+  .review-date{font-size:11px; color:var(--muted); opacity:.7;}
+  .star-picker{display:flex; gap:6px; font-size:26px; margin-top:4px;}
+  .star-pick{cursor:pointer; color:var(--muted); transition:transform .1s;}
+  .star-pick:active{transform:scale(.85);}
+  .star-pick.filled{color:var(--cyan); text-shadow:0 0 8px rgba(0,217,255,0.4);}
   .form-body{
     transition:max-height .5s ease, opacity .4s ease, padding .4s ease, margin .4s ease;
   }
@@ -243,6 +291,7 @@
     font-family:'Orbitron',sans-serif; font-size:11px; letter-spacing:1.5px; font-weight:700;
     margin-bottom:4px;
   }
+  footer .powered a{text-decoration:none;}
   footer .powered span{
     background:linear-gradient(90deg, var(--cyan), var(--rose));
     -webkit-background-clip:text; background-clip:text; color:transparent;
@@ -252,17 +301,20 @@
 <body>
 
 <header>
-  <div class="brand" id="brandLogo">FJ <span>SALOON</span></div>
+  <div class="brand" id="brandLogo"><span id="brandText">FJ SALOON</span></div>
   <nav>
     <button id="navBook" class="active">Book</button>
-    <button id="themeToggle">☀ Light</button>
+    <div class="nav-utils">
+      <button id="navHistory">History</button>
+      <button id="themeToggle">☀ Light</button>
+    </div>
   </nav>
 </header>
 
 <main id="app"></main>
 
 <footer>
-  <div class="powered">Powered by <span>RUSH Environment</span></div>
+  <div class="powered">Powered by <a href="https://rusthicrush.github.io/Rush2/" target="_blank" rel="noopener"><span>RUSH Environment</span></a></div>
   <div>© 2026 FJ Saloon · Art of Magic. All rights reserved.</div>
 </footer>
 
@@ -297,9 +349,114 @@ async function getOwnerPassword(){
   }
 }
 
-const SERVICES = ["Hair Cut","Beard Trim","Hair Colour","Facial","Head Massage","Shave","Fire Cutting","Hair Straightening"];
-const SERVICE_ICONS = {"Hair Cut":"✂️","Beard Trim":"🪒","Hair Colour":"🎨","Facial":"✨","Head Massage":"💆","Shave":"🪞","Fire Cutting":"🔥","Hair Straightening":"💇"};
-const SLOTS = ["9:00 AM","10:00 AM","11:00 AM","12:00 PM","1:00 PM","2:00 PM","3:00 PM","4:00 PM","5:00 PM","6:00 PM","7:00 PM"];
+const SERVICES = ["Hair Cut","Beard Trim","Hair Colour","Facial","Hydra Facial","Head Massage","Shave","Fire Cutting","Hair Straightening"];
+const SERVICE_ICONS = {"Hair Cut":"✂️","Beard Trim":"🪒","Hair Colour":"🎨","Facial":"✨","Hydra Facial":"💧","Head Massage":"💆","Shave":"🪞","Fire Cutting":"🔥","Hair Straightening":"💇"};
+const FACIAL_SERVICES = new Set(["Facial","Hydra Facial"]);
+
+/* Site customization — branding, colors, admin-added services and
+   homepage widgets, all editable from Admin → Customize. */
+let siteBranding = {
+  title: "FJ SALOON",
+  tagline: "Tap below to grab your booking number",
+  colorPrimary: "#00d9ff",
+  colorAccent: "#ff6fae",
+  ownerWelcomeText: "Welcome Boss"
+};
+let customServices = [];   // [{name, icon, category:"haircut"|"facial"}]
+let customWidgets = [];    // [{id, title, text, enabled}]
+let cardSettings = {
+  fields: [
+    {id:"name",    builtin:"name",    type:"text",    label:"Your Name",       required:true,  removable:true},
+    {id:"age",     builtin:"age",     type:"number",  label:"Age",             required:false, removable:true},
+    {id:"phone",   builtin:"phone",   type:"tel",     label:"Phone Number",    required:true,  removable:true},
+    {id:"service", builtin:"service", type:"service", label:"Service",         required:true,  removable:false},
+    {id:"time",    builtin:"time",    type:"time",    label:"Preferred Time",  required:true,  removable:false}
+  ],
+  cardBg: "",          // rgba string applied to CSS, empty = default glass look
+  cardBgHex: "",        // hex value for the colour picker's stored state
+  cardRadius: 18,       // px
+  cardBorder: "",       // border colour override (hex), empty = default
+  cardBorderHex: "",
+  buttonText: "Book Now"
+};
+const BUILTIN_FIELD_DEFAULTS = {
+  name:  {label:"Your Name",    type:"text",   required:true},
+  age:   {label:"Age",          type:"number", required:false},
+  phone: {label:"Phone Number", type:"tel",    required:true}
+};
+
+function effectiveServices(){
+  return [...SERVICES, ...customServices.map(c=>c.name)];
+}
+function effectiveIcon(name){
+  const custom = customServices.find(c=>c.name===name);
+  return custom ? custom.icon : (SERVICE_ICONS[name] || "");
+}
+function isFacialService(name){
+  if(FACIAL_SERVICES.has(name)) return true;
+  const custom = customServices.find(c=>c.name===name);
+  return custom && custom.category === "facial";
+}
+function applyBranding(){
+  document.documentElement.style.setProperty("--cyan", siteBranding.colorPrimary);
+  document.documentElement.style.setProperty("--rose", siteBranding.colorAccent);
+  document.documentElement.style.setProperty("--card-radius", cardSettings.cardRadius + "px");
+  if(cardSettings.cardBg){
+    document.documentElement.style.setProperty("--glass", cardSettings.cardBg);
+  }
+  const brandText = document.getElementById("brandText");
+  if(brandText) brandText.textContent = siteBranding.title;
+}
+function renderWidgets(){
+  const area = document.getElementById("widgetsArea");
+  if(!area) return;
+  const active = customWidgets.filter(w=>w.enabled);
+  area.innerHTML = active.map(w => `
+    <div class="glass widget-card">
+      <div class="widget-title">${w.title}</div>
+      <p class="widget-text">${w.text}</p>
+    </div>
+  `).join("");
+}
+
+/* Time windows — Haircut-type services run daytime, Facial/Hydra Facial
+   run a separate evening window, both in 15-minute steps.
+   These defaults are used until the owner overrides them from
+   Admin → Settings, where they're saved to Firestore. */
+let scheduleSettings = {
+  haircutStart: "08:30", haircutEnd: "18:30",
+  facialStart: "19:00", facialEnd: "21:00",
+  autoCloseEnabled: true, autoCloseDay: 5, autoCloseTime: "23:00"
+};
+const DAY_NAMES = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+function formatTime12(hhmm){
+  const [h, m] = hhmm.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  let h12 = h % 12; if(h12 === 0) h12 = 12;
+  return `${h12}:${String(m).padStart(2,"0")} ${ampm}`;
+}
+
+function generateSlots(range, stepMin){
+  const [sh, sm] = range.start.split(":").map(Number);
+  const [eh, em] = range.end.split(":").map(Number);
+  let mins = sh*60 + sm;
+  const endMins = eh*60 + em;
+  const out = [];
+  while(mins <= endMins){
+    let h = Math.floor(mins/60), m = mins%60;
+    const ampm = h >= 12 ? "PM" : "AM";
+    let h12 = h % 12; if(h12 === 0) h12 = 12;
+    out.push(`${h12}:${String(m).padStart(2,"0")} ${ampm}`);
+    mins += stepMin;
+  }
+  return out;
+}
+function slotsForService(service){
+  const range = isFacialService(service)
+    ? {start: scheduleSettings.facialStart, end: scheduleSettings.facialEnd}
+    : {start: scheduleSettings.haircutStart, end: scheduleSettings.haircutEnd};
+  return generateSlots(range, 15);
+}
 
 function todayStr(){
   const d = new Date();
@@ -307,6 +464,55 @@ function todayStr(){
 }
 function todayLabel(){
   return new Date().toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'});
+}
+/* Auto weekly closing — configurable day + time from Admin → Settings.
+   Defaults to Friday from 11:00 PM onward. */
+function isAutoWeeklyClosed(){
+  if(!scheduleSettings.autoCloseEnabled) return false;
+  const d = new Date();
+  if(d.getDay() !== scheduleSettings.autoCloseDay) return false;
+  const [ch, cm] = scheduleSettings.autoCloseTime.split(":").map(Number);
+  const nowMins = d.getHours()*60 + d.getMinutes();
+  return nowMins >= (ch*60 + cm);
+}
+
+/* Keep scheduleSettings in sync with Firestore at all times, regardless
+   of which view (book/admin) is currently showing. */
+let scheduleGlobalUnsub = null;
+function startScheduleSync(){
+  if(scheduleGlobalUnsub) return;
+  scheduleGlobalUnsub = getSettingsDoc().onSnapshot(doc=>{
+    const data = doc.data() || {};
+    scheduleSettings = {
+      haircutStart: data.haircutStart || scheduleSettings.haircutStart,
+      haircutEnd: data.haircutEnd || scheduleSettings.haircutEnd,
+      facialStart: data.facialStart || scheduleSettings.facialStart,
+      facialEnd: data.facialEnd || scheduleSettings.facialEnd,
+      autoCloseEnabled: data.autoCloseEnabled !== undefined ? data.autoCloseEnabled : scheduleSettings.autoCloseEnabled,
+      autoCloseDay: data.autoCloseDay !== undefined ? data.autoCloseDay : scheduleSettings.autoCloseDay,
+      autoCloseTime: data.autoCloseTime || scheduleSettings.autoCloseTime
+    };
+    siteBranding = {
+      title: data.siteTitle || siteBranding.title,
+      tagline: data.siteTagline || siteBranding.tagline,
+      colorPrimary: data.colorPrimary || siteBranding.colorPrimary,
+      colorAccent: data.colorAccent || siteBranding.colorAccent,
+      ownerWelcomeText: data.ownerWelcomeText || siteBranding.ownerWelcomeText
+    };
+    customServices = data.customServices || [];
+    customWidgets = data.customWidgets || [];
+    cardSettings = {
+      fields: data.fields !== undefined ? data.fields : cardSettings.fields,
+      cardBg: data.cardBg !== undefined ? data.cardBg : cardSettings.cardBg,
+      cardBgHex: data.cardBgHex !== undefined ? data.cardBgHex : cardSettings.cardBgHex,
+      cardRadius: data.cardRadius !== undefined ? data.cardRadius : cardSettings.cardRadius,
+      cardBorder: data.cardBorder !== undefined ? data.cardBorder : cardSettings.cardBorder,
+      cardBorderHex: data.cardBorderHex !== undefined ? data.cardBorderHex : cardSettings.cardBorderHex,
+      buttonText: data.buttonText || cardSettings.buttonText
+    };
+    applyBranding();
+    renderWidgets();
+  });
 }
 
 /* Theme toggle — default (dark/transparent) vs Light, remembered per device */
@@ -330,6 +536,7 @@ function todayLabel(){
 
 const app = document.getElementById("app");
 const navBook = document.getElementById("navBook");
+const navHistory = document.getElementById("navHistory");
 const brandLogo = document.getElementById("brandLogo");
 let view = "book";
 let selectedService = null;
@@ -337,10 +544,20 @@ let selectedSlot = null;
 let unsubscribe = null;
 let settingsUnsub = null;
 let bookingUnsub = null;
+let slotsUnsub = null;
+let reviewsUnsub = null;
+let fridayCheckInterval = null;
+let selectedReviewRating = 0;
 let isOwner = sessionStorage.getItem("fj_owner") === "1";
 let adminSubView = "dashboard";
+let currentCardUnsubs = [];
+function unsubscribeCurrentCards(){
+  currentCardUnsubs.forEach(fn => fn());
+  currentCardUnsubs = [];
+}
 
 navBook.onclick = () => { view = "book"; history.replaceState(null,"",location.pathname); render(); };
+navHistory.onclick = () => { view = "history"; history.replaceState(null,"",location.pathname); render(); };
 
 /* Secret owner access — no visible button.
    Tap the "FJ SALOON" logo 5 times within 2 seconds, OR open the page
@@ -362,6 +579,7 @@ if(location.hash === "#owner"){
 
 function setActive(){
   navBook.classList.toggle("active", view==="book");
+  navHistory.classList.toggle("active", view==="history");
 }
 
 /* ---------- SETTINGS (open/closed for today) ---------- */
@@ -383,111 +601,374 @@ function getNextBookingNumber(date){
   });
 }
 
+/* ---------- RATINGS & REVIEWS ---------- */
+function starString(n){
+  const full = Math.round(n);
+  return "★".repeat(full) + "☆".repeat(5 - full);
+}
+function timeAgo(ts){
+  if(!ts || !ts.toDate) return "";
+  const diff = Date.now() - ts.toDate().getTime();
+  const days = Math.floor(diff / 86400000);
+  if(days <= 0) return "Today";
+  if(days === 1) return "1 day ago";
+  return `${days} days ago`;
+}
+
+function setupRatingBadge(){
+  if(reviewsUnsub) reviewsUnsub();
+  reviewsUnsub = db.collection("reviews").orderBy("createdAt","desc").onSnapshot(snap=>{
+    const reviews = snap.docs.map(d=>d.data());
+    const badge = document.getElementById("ratingBadge");
+    if(!badge) return;
+    const count = reviews.length;
+    const avg = count ? reviews.reduce((s,r)=>s+r.rating,0)/count : 0;
+    document.getElementById("ratingStars").textContent = starString(avg);
+    document.getElementById("ratingText").textContent = count
+      ? `${avg.toFixed(1)} (${count} review${count===1?"":"s"})`
+      : "No reviews yet";
+
+    const summary = document.getElementById("reviewSummary");
+    if(summary){
+      summary.innerHTML = count
+        ? `<div class="ticket-num" style="font-size:36px;">${avg.toFixed(1)}</div><div style="color:var(--cyan);letter-spacing:2px;">${starString(avg)}</div><div class="hint" style="margin-top:4px;">${count} review${count===1?"":"s"}</div>`
+        : `<p class="hint">Be the first to leave a review.</p>`;
+    }
+    const list = document.getElementById("reviewList");
+    if(list){
+      list.innerHTML = reviews.slice(0,20).map(r=>`
+        <div class="review-item">
+          <div class="review-item-top">
+            <span class="review-name">${r.name || "Customer"}</span>
+            <span class="review-stars">${starString(r.rating)}</span>
+          </div>
+          ${r.review ? `<p class="review-text">${r.review}</p>` : ""}
+          <span class="review-date">${timeAgo(r.createdAt)}</span>
+        </div>
+      `).join("") || "";
+    }
+  });
+
+  document.getElementById("ratingBadge").onclick = () => {
+    document.getElementById("reviewModal").classList.remove("hidden");
+  };
+}
+
+function buildStarPicker(container, onChange){
+  container.innerHTML = "";
+  selectedReviewRating = 0;
+  for(let i=1;i<=5;i++){
+    const s = document.createElement("span");
+    s.className = "star-pick"; s.textContent = "☆"; s.dataset.v = i;
+    s.onclick = () => {
+      selectedReviewRating = i;
+      [...container.children].forEach((el,idx)=>{
+        el.textContent = (idx < i) ? "★" : "☆";
+        el.classList.toggle("filled", idx < i);
+      });
+      if(onChange) onChange(i);
+    };
+    container.appendChild(s);
+  }
+}
+
+function setupReviewModal(){
+  const picker = document.getElementById("starPicker");
+  buildStarPicker(picker);
+
+  document.getElementById("closeReviewModal").onclick = () => {
+    document.getElementById("reviewModal").classList.add("hidden");
+  };
+
+  document.getElementById("submitReviewBtn").onclick = async () => {
+    const name = document.getElementById("revName").value.trim();
+    const text = document.getElementById("revText").value.trim();
+    const errEl = document.getElementById("revErr");
+    errEl.style.display = "none";
+    if(!name || !selectedReviewRating){
+      errEl.textContent = "Enter your name and pick a star rating.";
+      errEl.style.display = "block";
+      return;
+    }
+    const btn = document.getElementById("submitReviewBtn");
+    btn.disabled = true; btn.textContent = "Submitting...";
+    try{
+      await db.collection("reviews").add({
+        name, rating: selectedReviewRating, review: text,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      document.getElementById("revName").value = "";
+      document.getElementById("revText").value = "";
+      buildStarPicker(picker);
+      btn.disabled = false; btn.textContent = "Submit Review";
+      document.getElementById("reviewModal").classList.add("hidden");
+    }catch(e){
+      errEl.textContent = "Something went wrong. Try again.";
+      errEl.style.display = "block";
+      btn.disabled = false; btn.textContent = "Submit Review";
+    }
+  };
+}
+
 /* ================= CUSTOMER BOOKING VIEW ================= */
-function activeBookingKey(){ return "fj_active_booking_" + todayStr(); }
+/* Every booking id made from this device is kept here permanently (not
+   just today's), so we can show "my current bookings" at the top of the
+   Book tab and list everything finished/cancelled under History. */
+const MY_BOOKINGS_KEY = "fj_my_bookings";
+function getMyBookingIds(){
+  try{ return JSON.parse(localStorage.getItem(MY_BOOKINGS_KEY)) || []; }
+  catch(e){ return []; }
+}
+function addMyBookingId(id){
+  const ids = getMyBookingIds();
+  if(!ids.includes(id)){
+    ids.unshift(id);
+    localStorage.setItem(MY_BOOKINGS_KEY, JSON.stringify(ids));
+  }
+}
 
 function renderBook(){
   setActive();
-  const activeId = localStorage.getItem(activeBookingKey());
-  if(activeId){
-    renderBookingStatus(activeId);
-    return;
-  }
   renderBookingForm();
 }
 
-function renderBookingStatus(bookingId){
-  app.innerHTML = `<div id="statusArea"></div>`;
-  if(bookingUnsub) bookingUnsub();
-  bookingUnsub = db.collection("bookings").doc(bookingId).onSnapshot(doc=>{
-    const area = document.getElementById("statusArea");
-    if(!area) return;
-    if(!doc.exists){
-      localStorage.removeItem(activeBookingKey());
-      renderBookingForm();
-      return;
-    }
-    const b = doc.data();
-    if(b.status === "cancelled"){
-      area.innerHTML = `
-        <div class="glass ticket">
-          <div class="ticket-num" style="color:var(--red);">#${b.bookingNumber}</div>
-          <p>Your booking was cancelled by the salon</p>
-          <div class="name">${b.name}</div>
-          <button class="btn" id="rebookBtn" style="margin-top:20px;">Book Again</button>
-        </div>
-      `;
-      document.getElementById("rebookBtn").onclick = () => {
-        localStorage.removeItem(activeBookingKey());
-        renderBookingForm();
-      };
-      return;
-    }
-    if(b.status === "completed"){
-      area.innerHTML = `
-        <div class="glass ticket">
-          <div class="ticket-num" style="color:var(--green);">#${b.bookingNumber}</div>
-          <p>Service completed — thank you!</p>
-          <div class="name">${b.name}</div>
-          <button class="btn" id="rebookBtn" style="margin-top:20px;">Book Again</button>
-        </div>
-      `;
-      document.getElementById("rebookBtn").onclick = () => {
-        localStorage.removeItem(activeBookingKey());
-        renderBookingForm();
-      };
-      return;
-    }
-    if(b.status === "confirmed"){
-      area.innerHTML = `
-        <div class="glass ticket">
-          <div class="ticket-num">#${b.bookingNumber}</div>
-          <p>Your booking for today</p>
-          <div class="name">${b.name}</div>
-          <p>${b.service} · ${b.slot}</p>
-          <p style="margin-top:14px;color:var(--green);">✓ Confirmed by the salon</p>
-        </div>
-      `;
-      return;
-    }
-    // pending — live waiting screen
-    area.innerHTML = `
-      <div class="glass ticket">
-        <div class="wait-ring"><div class="ticket-num">#${b.bookingNumber}</div></div>
-        <p>${b.name} · ${b.service} · ${b.slot}</p>
-        <p style="margin-top:14px;color:var(--amber);">Waiting for the salon to confirm your booking…</p>
-        <small class="hint">This updates automatically — no need to refresh.</small>
-      </div>
-    `;
+/* Compact live cards for any of "my" bookings that are still pending,
+   confirmed, or completed-but-not-yet-rated. These sit above the booking
+   form so a new booking can always be started without losing sight of
+   an existing one. Anything cancelled, or completed+rated, drops out of
+   this list and shows up in History instead. */
+function renderCurrentBookings(){
+  const wrap = document.getElementById("currentBookingsArea");
+  if(!wrap) return;
+  const ids = getMyBookingIds();
+  if(!ids.length){ wrap.innerHTML = ""; return; }
+
+  unsubscribeCurrentCards();
+  const cardStates = {};
+
+  function paint(){
+    const cards = ids
+      .map(id => cardStates[id])
+      .filter(b => b && (b.status === "pending" || b.status === "confirmed" || (b.status === "completed" && !b.reviewed)))
+      .sort((a,b) => (b.createdAtMs||0) - (a.createdAtMs||0));
+    if(!cards.length){ wrap.innerHTML = ""; return; }
+    wrap.innerHTML = `<div class="divider">✦ My Current Bookings</div>` +
+      cards.map(b => currentBookingCardMarkup(b)).join("");
+    cards.forEach(b => wireCurrentBookingCard(b));
+  }
+
+  ids.forEach(id => {
+    const unsub = db.collection("bookings").doc(id).onSnapshot(doc => {
+      if(!doc.exists){ delete cardStates[id]; paint(); return; }
+      const data = doc.data();
+      cardStates[id] = { id, ...data, createdAtMs: data.createdAt && data.createdAt.toMillis ? data.createdAt.toMillis() : 0 };
+      paint();
+    });
+    currentCardUnsubs.push(unsub);
   });
+}
+
+function currentBookingCardMarkup(b){
+  if(b.status === "confirmed"){
+    return `
+      <div class="glass book-card">
+        <div class="book-top">
+          <div class="book-num">#${b.bookingNumber}</div>
+          <div class="book-status st-confirmed">confirmed</div>
+        </div>
+        <div class="book-meta">${b.name || ""} · ${b.service} · ${b.slot}<br/>✓ Confirmed by the salon</div>
+      </div>`;
+  }
+  if(b.status === "completed"){
+    return `
+      <div class="glass book-card" style="text-align:left;">
+        <div class="book-top">
+          <div class="book-num">#${b.bookingNumber}</div>
+          <div class="book-status st-completed">completed</div>
+        </div>
+        <div class="book-meta">${b.name || ""} · ${b.service} · ${b.slot}</div>
+        <div class="divider">✦ Rate Your Experience</div>
+        <div class="star-picker" id="starPicker_${b.id}" style="justify-content:center;"></div>
+        <input id="revText_${b.id}" type="text" placeholder="How was your visit? (optional)" style="margin-top:8px;" />
+        <div class="err" id="revErr_${b.id}"></div>
+        <button class="btn" id="submitRating_${b.id}" style="margin-top:10px;">Submit Rating</button>
+      </div>`;
+  }
+  // pending
+  return `
+    <div class="glass book-card">
+      <div class="book-top">
+        <div class="book-num">#${b.bookingNumber}</div>
+        <div class="book-status st-pending">pending</div>
+      </div>
+      <div class="book-meta">${b.name || ""} · ${b.service} · ${b.slot}<br/>Waiting for the salon to confirm…</div>
+    </div>`;
+}
+
+function wireCurrentBookingCard(b){
+  if(b.status !== "completed") return;
+  const picker = document.getElementById(`starPicker_${b.id}`);
+  if(!picker) return;
+  let localRating = 0;
+  picker.innerHTML = "";
+  for(let i=1;i<=5;i++){
+    const s = document.createElement("span");
+    s.className = "star-pick"; s.textContent = "☆"; s.dataset.v = i;
+    s.onclick = () => {
+      localRating = i;
+      [...picker.children].forEach((el,idx)=>{
+        el.textContent = (idx < i) ? "★" : "☆";
+        el.classList.toggle("filled", idx < i);
+      });
+    };
+    picker.appendChild(s);
+  }
+  const btn = document.getElementById(`submitRating_${b.id}`);
+  btn.onclick = async () => {
+    const text = document.getElementById(`revText_${b.id}`).value.trim();
+    const errEl = document.getElementById(`revErr_${b.id}`);
+    errEl.style.display = "none";
+    if(!localRating){
+      errEl.textContent = "Pick a star rating first.";
+      errEl.style.display = "block";
+      return;
+    }
+    btn.disabled = true; btn.textContent = "Submitting...";
+    try{
+      await db.collection("reviews").add({
+        name: b.name, rating: localRating, review: text,
+        bookingId: b.id,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      await db.collection("bookings").doc(b.id).update({reviewed: true});
+      // Card will drop off "current" and appear under History automatically.
+    }catch(e){
+      errEl.textContent = "Something went wrong. Try again.";
+      errEl.style.display = "block";
+      btn.disabled = false; btn.textContent = "Submit Rating";
+    }
+  };
+}
+
+/* ================= HISTORY VIEW ================= */
+async function renderHistory(){
+  setActive();
+  app.innerHTML = `<h2 style="font-size:16px;letter-spacing:1px;margin-bottom:12px;">Booking History</h2><div id="historyList"><div class="empty">Loading…</div></div>`;
+  const ids = getMyBookingIds();
+  const list = document.getElementById("historyList");
+  if(!ids.length){
+    list.innerHTML = `<div class="empty">No past bookings yet.</div>`;
+    return;
+  }
+  try{
+    const docs = await Promise.all(ids.map(id => db.collection("bookings").doc(id).get()));
+    const bookings = docs
+      .filter(d => d.exists)
+      .map(d => ({ id: d.id, ...d.data() }))
+      .filter(b => b.status === "cancelled" || (b.status === "completed" && b.reviewed))
+      .sort((a,b) => {
+        const am = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
+        const bm = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
+        return bm - am;
+      });
+    if(!bookings.length){
+      list.innerHTML = `<div class="empty">No finished or cancelled bookings yet.</div>`;
+      return;
+    }
+    list.innerHTML = bookings.map(b => `
+      <div class="glass book-card">
+        <div class="book-top">
+          <div><span class="book-num">#${b.bookingNumber}</span></div>
+          <div class="book-status st-${b.status}">${b.status}</div>
+        </div>
+        <div class="book-meta">
+          ${b.date || ""}<br/>
+          ${b.service} · ${b.slot}
+        </div>
+      </div>
+    `).join("");
+  }catch(e){
+    list.innerHTML = `<div class="empty">Couldn't load history. Try again.</div>`;
+    console.error(e);
+  }
+}
+
+function renderBookingFieldMarkup(f){
+  if(f.builtin === "service"){
+    return `
+      <label>${f.label}</label>
+      <div class="chip-row" id="serviceChips"></div>`;
+  }
+  if(f.builtin === "time"){
+    return `
+      <div class="divider">✦</div>
+      <label>${f.label}</label>
+      <div class="chip-row" id="slotChips"></div>
+      <small class="hint" id="slotHint">Pick a service first to see available times.</small>`;
+  }
+  if(f.builtin === "name"){
+    return `
+      <label>${f.label}${f.required ? " *" : ""}</label>
+      <input id="fName" type="text" placeholder="${f.label}" />`;
+  }
+  if(f.builtin === "age"){
+    return `
+      <label>${f.label}${f.required ? " *" : ""}</label>
+      <input id="fAge" type="number" min="1" max="120" placeholder="${f.label}" />`;
+  }
+  if(f.builtin === "phone"){
+    return `
+      <label>${f.label}${f.required ? " *" : ""}</label>
+      <input id="fPhone" type="tel" placeholder="10-digit phone number" />`;
+  }
+  // custom field
+  return `
+      <label>${f.label}${f.required ? " *" : ""}</label>
+      <input id="fCustom_${f.id}" type="text" placeholder="${f.label}" data-field-id="${f.id}" data-field-label="${f.label}" data-required="${f.required ? "1" : "0"}" />`;
 }
 
 function renderBookingForm(){
   selectedService = null; selectedSlot = null;
   app.innerHTML = `
     <div id="statusBanner"></div>
+    <div id="widgetsArea"></div>
+    <div id="currentBookingsArea"></div>
     <div class="glass landing-card" id="landingCard">
       <h2 style="font-size:16px;letter-spacing:1px;">${todayLabel()}</h2>
-      <p class="landing-sub">Tap below to grab your booking number</p>
+      <p class="landing-sub" id="landingTagline">${siteBranding.tagline}</p>
       <button class="btn" id="openFormBtn">✦ Tap to Book</button>
     </div>
-    <div class="glass form-body collapsed" id="formCard">
-      <label>Your Name</label>
-      <input id="fName" type="text" placeholder="Full name" />
-      <label>Age</label>
-      <input id="fAge" type="number" min="1" max="120" placeholder="Age" />
-      <label>Phone Number</label>
-      <input id="fPhone" type="tel" placeholder="10-digit phone number" />
-      <label>Service</label>
-      <div class="chip-row" id="serviceChips"></div>
-      <div class="divider">✦</div>
-      <label>Preferred Time</label>
-      <div class="chip-row" id="slotChips"></div>
+    <div class="glass form-body collapsed" id="formCard" style="${cardSettings.cardBorder ? `border-color:${cardSettings.cardBorder};` : ""}">
+      ${cardSettings.fields.map(renderBookingFieldMarkup).join("")}
       <div class="err" id="formErr"></div>
-      <button class="btn" id="bookBtn">Book Now</button>
+      <button class="btn" id="bookBtn">${cardSettings.buttonText}</button>
       <small class="hint">Booking number is assigned automatically and resets every day.</small>
     </div>
     <div id="ticketArea"></div>
+    <div class="glass rating-badge" id="ratingBadge">
+      <span id="ratingStars">☆☆☆☆☆</span>
+      <span id="ratingText" class="rating-text">No reviews yet</span>
+      <span class="rating-arrow">›</span>
+    </div>
+    <div id="reviewModal" class="review-modal hidden">
+      <div class="review-modal-inner glass">
+        <div class="review-modal-head">
+          <h3>Ratings & Reviews</h3>
+          <button id="closeReviewModal" class="mini-btn" style="flex:none;">✕</button>
+        </div>
+        <div id="reviewSummary" class="review-summary"></div>
+        <div id="reviewList" class="review-list"></div>
+        <div class="divider">✦ Write a Review</div>
+        <label>Your Name</label>
+        <input id="revName" type="text" placeholder="Your name" />
+        <label>Rating</label>
+        <div class="star-picker" id="starPicker"></div>
+        <label>Your Review</label>
+        <input id="revText" type="text" placeholder="Share your experience..." />
+        <div class="err" id="revErr"></div>
+        <button class="btn" id="submitReviewBtn">Submit Review</button>
+      </div>
+    </div>
   `;
 
   document.getElementById("openFormBtn").onclick = () => {
@@ -497,51 +978,132 @@ function renderBookingForm(){
     formCard.classList.add("open");
   };
 
+  setupRatingBadge();
+  setupReviewModal();
+  renderWidgets();
+  applyBranding();
+  renderCurrentBookings();
+
+  let bookedSlots = new Set();
+
+  function renderSlotChips(){
+    const slotWrap = document.getElementById("slotChips");
+    const hint = document.getElementById("slotHint");
+    if(!slotWrap) return;
+    slotWrap.innerHTML = "";
+    if(!selectedService){
+      hint.textContent = "Pick a service first to see available times.";
+      hint.style.display = "block";
+      return;
+    }
+    hint.style.display = "none";
+    const slots = slotsForService(selectedService);
+    const takenSet = mergedBookedSlots();
+    slots.forEach(s=>{
+      const c = document.createElement("div");
+      const taken = takenSet.has(s);
+      c.className = "chip" + (taken ? " chip-disabled" : "") + (selectedSlot===s ? " sel" : "");
+      c.textContent = taken ? `${s} ✕` : s;
+      if(taken){
+        selectedSlot = (selectedSlot===s) ? null : selectedSlot;
+      }else{
+        c.onclick = () => {
+          selectedSlot = s;
+          [...slotWrap.children].forEach(x=>x.classList.remove("sel"));
+          c.classList.add("sel");
+        };
+      }
+      slotWrap.appendChild(c);
+    });
+  }
+
   const svcWrap = document.getElementById("serviceChips");
-  SERVICES.forEach(s=>{
+  effectiveServices().forEach(s=>{
     const c = document.createElement("div");
-    c.className = "chip"; c.textContent = `${SERVICE_ICONS[s] || ""} ${s}`;
-    c.onclick = () => { selectedService = s; [...svcWrap.children].forEach(x=>x.classList.remove("sel")); c.classList.add("sel"); };
+    c.className = "chip"; c.textContent = `${effectiveIcon(s)} ${s}`;
+    c.onclick = () => {
+      selectedService = s; selectedSlot = null;
+      [...svcWrap.children].forEach(x=>x.classList.remove("sel"));
+      c.classList.add("sel");
+      renderSlotChips();
+    };
     svcWrap.appendChild(c);
   });
-  const slotWrap = document.getElementById("slotChips");
-  SLOTS.forEach(s=>{
-    const c = document.createElement("div");
-    c.className = "chip"; c.textContent = s;
-    c.onclick = () => { selectedSlot = s; [...slotWrap.children].forEach(x=>x.classList.remove("sel")); c.classList.add("sel"); };
-    slotWrap.appendChild(c);
-  });
+
+  /* Live slot availability — any non-cancelled booking today locks that
+     time slot for everyone else. */
+  if(slotsUnsub) slotsUnsub();
+  slotsUnsub = db.collection("bookings").where("date","==",todayStr())
+    .onSnapshot(snap=>{
+      bookedSlots = new Set(
+        snap.docs
+          .map(d=>d.data())
+          .filter(b=>b.status !== "cancelled")
+          .map(b=>b.slot)
+      );
+      renderSlotChips();
+    });
 
   let shopOpen = true;
-  if(settingsUnsub) settingsUnsub();
-  settingsUnsub = getSettingsDoc().onSnapshot(doc=>{
-    const data = doc.data() || {};
-    const offDates = data.offDates || [];
-    shopOpen = !offDates.includes(todayStr());
+  let lastOffDates = [];
+  function updateShopBanner(){
+    const manuallyOff = lastOffDates.includes(todayStr());
+    const fridayClosed = isAutoWeeklyClosed();
+    shopOpen = !manuallyOff && !fridayClosed;
     const banner = document.getElementById("statusBanner");
     if(!banner) return;
     banner.innerHTML = shopOpen
       ? `<div class="status-banner open"><span class="dot"></span> Open today — booking available</div>`
-      : `<div class="status-banner closed"><span class="dot"></span> Closed today — owner has paused bookings</div>`;
+      : fridayClosed
+        ? `<div class="status-banner closed"><span class="dot"></span> Closed — ${DAY_NAMES[scheduleSettings.autoCloseDay]} hours ended at ${formatTime12(scheduleSettings.autoCloseTime)}</div>`
+        : `<div class="status-banner closed"><span class="dot"></span> Closed today — owner has paused bookings</div>`;
     const openBtn = document.getElementById("openFormBtn");
     const bookBtn = document.getElementById("bookBtn");
     if(openBtn) openBtn.disabled = !shopOpen;
     if(bookBtn) bookBtn.disabled = !shopOpen;
+  }
+  let manuallyBlockedSlots = new Set();
+  function mergedBookedSlots(){
+    return new Set([...bookedSlots, ...manuallyBlockedSlots]);
+  }
+  if(settingsUnsub) settingsUnsub();
+  settingsUnsub = getSettingsDoc().onSnapshot(doc=>{
+    const data = doc.data() || {};
+    lastOffDates = data.offDates || [];
+    const blockedMap = data.blockedSlots || {};
+    manuallyBlockedSlots = new Set(blockedMap[todayStr()] || []);
+    updateShopBanner();
+    renderSlotChips();
   });
+  if(fridayCheckInterval) clearInterval(fridayCheckInterval);
+  fridayCheckInterval = setInterval(updateShopBanner, 60000);
 
   document.getElementById("bookBtn").onclick = async () => {
-    const name = document.getElementById("fName").value.trim();
-    const age = document.getElementById("fAge").value.trim();
-    const phone = document.getElementById("fPhone").value.trim();
+    const hasField = k => cardSettings.fields.some(f => f.builtin === k);
+    const isRequired = k => { const f = cardSettings.fields.find(f => f.builtin === k); return f ? !!f.required : false; };
+    const nameEl = document.getElementById("fName");
+    const name = nameEl ? nameEl.value.trim() : "";
+    const ageEl = document.getElementById("fAge");
+    const age = ageEl ? ageEl.value.trim() : "";
+    const phoneEl = document.getElementById("fPhone");
+    const phone = phoneEl ? phoneEl.value.trim() : "";
+    const customFieldEntries = cardSettings.fields.filter(f => !f.builtin).map(f => {
+      const el = document.getElementById(`fCustom_${f.id}`);
+      return { id: f.id, label: f.label, required: !!f.required, value: el ? el.value.trim() : "" };
+    });
     const errEl = document.getElementById("formErr");
     errEl.style.display = "none";
 
-    if(!name || !age || !phone || !selectedService || !selectedSlot){
+    const missingRequiredField = customFieldEntries.some(f => f.required && !f.value);
+    const nameMissing = hasField("name") && isRequired("name") && !name;
+    const phoneMissing = hasField("phone") && isRequired("phone") && !phone;
+    const ageMissing = hasField("age") && isRequired("age") && !age;
+    if(nameMissing || phoneMissing || ageMissing || !selectedService || !selectedSlot || missingRequiredField){
       errEl.textContent = "Fill all fields, and pick a service and time.";
       errEl.style.display = "block";
       return;
     }
-    if(!/^[0-9]{10}$/.test(phone)){
+    if(phone && !/^[0-9]{10}$/.test(phone)){
       errEl.textContent = "Enter a valid 10-digit phone number.";
       errEl.style.display = "block";
       return;
@@ -552,18 +1114,41 @@ function renderBookingForm(){
 
     try{
       const date = todayStr();
+
+      // Re-check the slot is still free right before writing, in case
+      // someone else grabbed it in the last moment.
+      const clash = await db.collection("bookings")
+        .where("date","==",date).where("slot","==",selectedSlot).get();
+      const stillTaken = clash.docs.some(d => d.data().status !== "cancelled");
+      if(stillTaken){
+        errEl.textContent = "That time slot was just taken — pick another.";
+        errEl.style.display = "block";
+        btn.disabled = false; btn.textContent = "Book Now";
+        selectedSlot = null;
+        return;
+      }
+
       const bookingNumber = await getNextBookingNumber(date);
 
-      const docRef = await db.collection("bookings").add({
-        bookingNumber, date, name, age, phone,
+      const bookingData = {
+        bookingNumber, date,
         service: selectedService, slot: selectedSlot,
         status: "pending",
         createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
+      };
+      if(hasField("name")) bookingData.name = name;
+      if(hasField("age")) bookingData.age = age;
+      if(hasField("phone")) bookingData.phone = phone;
+      const filledCustomFields = customFieldEntries
+        .filter(f => f.value)
+        .map(f => ({ id: f.id, label: f.label, value: f.value }));
+      if(filledCustomFields.length){
+        bookingData.customFields = filledCustomFields;
+      }
+      const docRef = await db.collection("bookings").add(bookingData);
 
-      localStorage.setItem(activeBookingKey(), docRef.id);
-      if(settingsUnsub){ settingsUnsub(); settingsUnsub = null; }
-      renderBookingStatus(docRef.id);
+      addMyBookingId(docRef.id);
+      renderBookingForm();
     }catch(e){
       errEl.textContent = "Something went wrong. Check your Firebase setup and try again.";
       errEl.style.display = "block";
@@ -577,7 +1162,38 @@ function renderBookingForm(){
 function renderAdminSettings(){
   app.innerHTML = `
     <div class="glass">
-      <h2 style="font-size:16px;margin-bottom:14px;">Admin Settings</h2>
+      <h2 style="font-size:16px;margin-bottom:14px;">Schedule Control</h2>
+      <div class="divider" style="margin-top:0;">Haircut-type Services</div>
+      <label>Start Time</label>
+      <input id="haircutStart" type="time" value="${scheduleSettings.haircutStart}" />
+      <label>End Time</label>
+      <input id="haircutEnd" type="time" value="${scheduleSettings.haircutEnd}" />
+      <div class="divider">Facial / Hydra Facial</div>
+      <label>Start Time</label>
+      <input id="facialStart" type="time" value="${scheduleSettings.facialStart}" />
+      <label>End Time</label>
+      <input id="facialEnd" type="time" value="${scheduleSettings.facialEnd}" />
+      <div class="divider">Weekly Auto-Close</div>
+      <div class="toggle-row" style="margin:10px 0;">
+        <span style="font-size:13px;color:var(--muted);">Enable auto-close</span>
+        <label class="switch">
+          <input type="checkbox" id="autoCloseEnabled" ${scheduleSettings.autoCloseEnabled ? "checked" : ""} />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <label>Day</label>
+      <select id="autoCloseDay">
+        ${DAY_NAMES.map((d,i)=>`<option value="${i}" ${i===scheduleSettings.autoCloseDay ? "selected" : ""}>${d}</option>`).join("")}
+      </select>
+      <label>Time</label>
+      <input id="autoCloseTime" type="time" value="${scheduleSettings.autoCloseTime}" />
+      <div class="err" id="scheduleErr"></div>
+      <div id="scheduleOk" style="display:none;color:var(--green);font-size:13px;margin-top:10px;">Schedule saved.</div>
+      <button class="btn" id="saveScheduleBtn">Save Schedule</button>
+    </div>
+
+    <div class="glass">
+      <h2 style="font-size:16px;margin-bottom:14px;">Admin Password</h2>
       <label>Current Password</label>
       <input id="curPass" type="password" placeholder="Current password" />
       <label>New Password</label>
@@ -590,6 +1206,36 @@ function renderAdminSettings(){
     </div>
     <button class="btn secondary" id="backBtn">← Back to Dashboard</button>
   `;
+
+  document.getElementById("saveScheduleBtn").onclick = async () => {
+    const errEl = document.getElementById("scheduleErr");
+    const okEl = document.getElementById("scheduleOk");
+    errEl.style.display = "none"; okEl.style.display = "none";
+
+    const hs = document.getElementById("haircutStart").value;
+    const he = document.getElementById("haircutEnd").value;
+    const fs = document.getElementById("facialStart").value;
+    const fe = document.getElementById("facialEnd").value;
+    const acEnabled = document.getElementById("autoCloseEnabled").checked;
+    const acDay = Number(document.getElementById("autoCloseDay").value);
+    const acTime = document.getElementById("autoCloseTime").value;
+
+    if(!hs || !he || !fs || !fe || !acTime){
+      errEl.textContent = "Fill all time fields.";
+      errEl.style.display = "block";
+      return;
+    }
+
+    const btn = document.getElementById("saveScheduleBtn");
+    btn.disabled = true; btn.textContent = "Saving...";
+    await getSettingsDoc().set({
+      haircutStart: hs, haircutEnd: he,
+      facialStart: fs, facialEnd: fe,
+      autoCloseEnabled: acEnabled, autoCloseDay: acDay, autoCloseTime: acTime
+    }, {merge:true});
+    okEl.style.display = "block";
+    btn.disabled = false; btn.textContent = "Save Schedule";
+  };
 
   document.getElementById("backBtn").onclick = () => {
     adminSubView = "dashboard";
@@ -639,18 +1285,468 @@ function renderAdminSettings(){
   };
 }
 
+function renderAdminSlots(){
+  const allSlots = [
+    {label:"Haircut-type", slots: slotsForService("Hair Cut")},
+    {label:"Facial / Hydra Facial", slots: slotsForService("Facial")}
+  ];
+  app.innerHTML = `
+    <div class="glass">
+      <h2 style="font-size:16px;margin-bottom:4px;">Block Time Slots — ${todayLabel()}</h2>
+      <small class="hint">Tap a slot to block or unblock it for today. Blocked slots are hidden from customers even if free.</small>
+      ${allSlots.map(group => `
+        <div class="divider">${group.label}</div>
+        <div class="chip-row" id="slotGrp_${group.label.replace(/[^a-zA-Z]/g,'')}"></div>
+      `).join("")}
+    </div>
+    <button class="btn secondary" id="backBtn">← Back to Dashboard</button>
+  `;
+
+  document.getElementById("backBtn").onclick = () => {
+    adminSubView = "dashboard";
+    renderAdmin();
+  };
+
+  getSettingsDoc().onSnapshot(doc=>{
+    const data = doc.data() || {};
+    const blockedMap = data.blockedSlots || {};
+    const blockedToday = new Set(blockedMap[todayStr()] || []);
+
+    allSlots.forEach(group=>{
+      const wrap = document.getElementById(`slotGrp_${group.label.replace(/[^a-zA-Z]/g,'')}`);
+      if(!wrap) return;
+      wrap.innerHTML = "";
+      group.slots.forEach(s=>{
+        const c = document.createElement("div");
+        const blocked = blockedToday.has(s);
+        c.className = "chip" + (blocked ? " chip-blocked" : "");
+        c.textContent = blocked ? `🔒 ${s}` : s;
+        c.onclick = async () => {
+          const snap = await getSettingsDoc().get();
+          const bm = (snap.data() && snap.data().blockedSlots) || {};
+          let today = new Set(bm[todayStr()] || []);
+          if(today.has(s)) today.delete(s); else today.add(s);
+          bm[todayStr()] = [...today];
+          await getSettingsDoc().set({blockedSlots: bm}, {merge:true});
+        };
+        wrap.appendChild(c);
+      });
+    });
+  });
+}
+
+function renderAdminReviews(){
+  app.innerHTML = `
+    <div class="glass">
+      <h2 style="font-size:16px;margin-bottom:4px;">Manage Reviews</h2>
+      <small class="hint">Delete reviews that are spam or unwanted.</small>
+      <div id="adminReviewList" style="margin-top:14px;"></div>
+    </div>
+    <button class="btn secondary" id="backBtn">← Back to Dashboard</button>
+  `;
+  document.getElementById("backBtn").onclick = () => {
+    adminSubView = "dashboard";
+    renderAdmin();
+  };
+
+  db.collection("reviews").orderBy("createdAt","desc").onSnapshot(snap=>{
+    const list = document.getElementById("adminReviewList");
+    if(!list) return;
+    if(snap.empty){
+      list.innerHTML = `<div class="empty">No reviews yet.</div>`;
+      return;
+    }
+    list.innerHTML = snap.docs.map(d=>{
+      const r = d.data();
+      return `
+        <div class="review-item">
+          <div class="review-item-top">
+            <span class="review-name">${r.name || "Customer"}</span>
+            <span class="review-stars">${starString(r.rating)}</span>
+          </div>
+          ${r.review ? `<p class="review-text">${r.review}</p>` : ""}
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+            <span class="review-date">${timeAgo(r.createdAt)}</span>
+            <button class="mini-btn" style="flex:none;color:var(--red);border-color:var(--red);" onclick="deleteReview('${d.id}')">🗑 Delete</button>
+          </div>
+        </div>
+      `;
+    }).join("");
+  });
+}
+
+function deleteReview(id){
+  if(!confirm("Delete this review?")) return;
+  db.collection("reviews").doc(id).delete();
+}
+window.deleteReview = deleteReview;
+
+function renderAdminCustomize(){
+  app.innerHTML = `
+    <div class="glass">
+      <h2 style="font-size:16px;margin-bottom:14px;">Site Branding</h2>
+      <label>Site Title</label>
+      <input id="cTitle" type="text" value="${siteBranding.title}" />
+      <label>Tagline</label>
+      <input id="cTagline" type="text" value="${siteBranding.tagline}" />
+      <label>Primary Colour</label>
+      <input id="cPrimary" type="color" value="${siteBranding.colorPrimary}" style="height:44px;padding:4px;" />
+      <label>Accent Colour</label>
+      <input id="cAccent" type="color" value="${siteBranding.colorAccent}" style="height:44px;padding:4px;" />
+      <div class="divider">Owner Login</div>
+      <label>Owner Login Welcome Text</label>
+      <input id="cOwnerWelcome" type="text" placeholder="e.g. Welcome Boss" value="${siteBranding.ownerWelcomeText}" />
+      <div class="err" id="brandErr"></div>
+      <div id="brandOk" style="display:none;color:var(--green);font-size:13px;margin-top:10px;">Branding saved.</div>
+      <button class="btn" id="saveBrandBtn">Save Branding</button>
+    </div>
+
+    <div class="glass">
+      <h2 style="font-size:16px;margin-bottom:4px;">Booking Fields</h2>
+      <small class="hint">Add, remove, reorder and rename every field on the booking card. Service &amp; Time run the scheduling logic so they're locked, but you can still rename and reposition them.</small>
+      <div id="fieldsList" style="margin-top:12px;"></div>
+      <div id="addBuiltinRow" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;"></div>
+      <div class="divider">Add Custom Field</div>
+      <label>New Field Label</label>
+      <input id="newFieldLabel" type="text" placeholder="e.g. Special Request" />
+      <div class="toggle-row" style="margin:14px 0 4px;">
+        <span style="font-size:13px;color:var(--muted);">Required</span>
+        <label class="switch">
+          <input type="checkbox" id="newFieldRequired" />
+          <span class="slider"></span>
+        </label>
+      </div>
+      <div class="err" id="fieldErr"></div>
+      <button class="btn secondary" id="addFieldBtn" type="button">+ Add Custom Field</button>
+    </div>
+
+    <div class="glass">
+      <h2 style="font-size:16px;margin-bottom:4px;">Card Appearance</h2>
+      <label>Book Button Text</label>
+      <input id="buttonText" type="text" value="${cardSettings.buttonText}" />
+      <label>Card Background Colour</label>
+      <input id="cardBgColor" type="color" value="${cardSettings.cardBgHex || "#101623"}" style="height:44px;padding:4px;" />
+      <label>Card Border Colour</label>
+      <input id="cardBorderColor" type="color" value="${cardSettings.cardBorderHex || "#00d9ff"}" style="height:44px;padding:4px;" />
+      <label>Card Corner Style</label>
+      <select id="cardRadius">
+        <option value="4" ${cardSettings.cardRadius===4?"selected":""}>Sharp</option>
+        <option value="12" ${cardSettings.cardRadius===12?"selected":""}>Soft</option>
+        <option value="18" ${cardSettings.cardRadius===18?"selected":""}>Rounded (default)</option>
+        <option value="28" ${cardSettings.cardRadius===28?"selected":""}>Extra Rounded</option>
+      </select>
+      <div class="err" id="cardErr"></div>
+      <div id="cardOk" style="display:none;color:var(--green);font-size:13px;margin-top:10px;">Card design saved.</div>
+      <button class="btn" id="saveCardBtn">Save Card Design</button>
+    </div>
+
+    <div class="glass">
+      <h2 style="font-size:16px;margin-bottom:4px;">Add Homepage Widget</h2>
+      <small class="hint">Show an announcement or offer on the customer home page.</small>
+      <label>Title</label>
+      <input id="newWidgetTitle" type="text" placeholder="e.g. Independence Day Offer" />
+      <label>Message</label>
+      <input id="newWidgetText" type="text" placeholder="e.g. 20% off all facials this week" />
+      <div class="err" id="widgetErr"></div>
+      <button class="btn" id="addWidgetBtn">Add Widget</button>
+      <div id="customWidgetList" style="margin-top:14px;"></div>
+    </div>
+
+    <button class="btn secondary" id="backBtn">← Back to Dashboard</button>
+  `;
+
+  document.getElementById("backBtn").onclick = () => {
+    adminSubView = "dashboard";
+    renderAdmin();
+  };
+
+  document.getElementById("saveBrandBtn").onclick = async () => {
+    const title = document.getElementById("cTitle").value.trim();
+    const tagline = document.getElementById("cTagline").value.trim();
+    const primary = document.getElementById("cPrimary").value;
+    const accent = document.getElementById("cAccent").value;
+    const ownerWelcome = document.getElementById("cOwnerWelcome").value.trim() || "Welcome Boss";
+    const errEl = document.getElementById("brandErr");
+    const okEl = document.getElementById("brandOk");
+    errEl.style.display = "none"; okEl.style.display = "none";
+    if(!title){
+      errEl.textContent = "Site title can't be empty.";
+      errEl.style.display = "block";
+      return;
+    }
+    const btn = document.getElementById("saveBrandBtn");
+    btn.disabled = true; btn.textContent = "Saving...";
+    await getSettingsDoc().set({
+      siteTitle: title, siteTagline: tagline,
+      colorPrimary: primary, colorAccent: accent,
+      ownerWelcomeText: ownerWelcome
+    }, {merge:true});
+    okEl.style.display = "block";
+    btn.disabled = false; btn.textContent = "Save Branding";
+  };
+
+  document.getElementById("saveCardBtn").onclick = async () => {
+    const buttonText = document.getElementById("buttonText").value.trim() || "Book Now";
+    const bgColorHex = document.getElementById("cardBgColor").value;
+    const borderColorHex = document.getElementById("cardBorderColor").value;
+    const radius = Number(document.getElementById("cardRadius").value);
+    const btn = document.getElementById("saveCardBtn");
+    const errEl = document.getElementById("cardErr");
+    const okEl = document.getElementById("cardOk");
+    errEl.style.display = "none"; okEl.style.display = "none";
+    btn.disabled = true; btn.textContent = "Saving...";
+    // convert hex to a translucent rgba so the glass look is preserved
+    const r = parseInt(bgColorHex.slice(1,3),16), g = parseInt(bgColorHex.slice(3,5),16), b = parseInt(bgColorHex.slice(5,7),16);
+    const cardBgRgba = `rgba(${r},${g},${b},0.55)`;
+    await getSettingsDoc().set({
+      buttonText,
+      cardBg: cardBgRgba,
+      cardBgHex: bgColorHex,
+      cardBorder: borderColorHex,
+      cardBorderHex: borderColorHex,
+      cardRadius: radius
+    }, {merge:true});
+    okEl.style.display = "block";
+    btn.disabled = false; btn.textContent = "Save Card Design";
+  };
+
+  async function persistFields(updated){
+    await getSettingsDoc().set({fields: updated}, {merge:true});
+    cardSettings = {...cardSettings, fields: updated};
+    renderFieldsList();
+  }
+
+  function renderFieldsList(){
+    const list = document.getElementById("fieldsList");
+    if(!list) return;
+    const fields = cardSettings.fields;
+    list.innerHTML = fields.map((f,i) => `
+      <div class="book-card glass" style="padding:10px 14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+          <input type="text" value="${f.label}" style="flex:1;margin:0;" onchange="renameField(${i}, this.value)" />
+          <div style="display:flex;gap:4px;flex:none;">
+            <button class="mini-btn" style="flex:none;" onclick="moveField(${i},-1)" ${i===0?"disabled":""}>↑</button>
+            <button class="mini-btn" style="flex:none;" onclick="moveField(${i},1)" ${i===fields.length-1?"disabled":""}>↓</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px;">
+          <span class="hint">${f.builtin ? f.builtin.charAt(0).toUpperCase()+f.builtin.slice(1)+" field" : "Custom field"}</span>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);">
+              Required
+              <label class="switch" style="width:34px;height:20px;">
+                <input type="checkbox" ${f.required ? "checked" : ""} ${(f.builtin==="service"||f.builtin==="time") ? "disabled" : ""} onchange="toggleFieldRequired(${i})" />
+                <span class="slider"></span>
+              </label>
+            </label>
+            ${f.removable
+              ? `<button class="mini-btn" style="flex:none;color:var(--red);border-color:var(--red);" onclick="removeField(${i})">✕ Remove</button>`
+              : `<span class="hint">Locked</span>`}
+          </div>
+        </div>
+        ${f.builtin === "service" ? serviceManagerMarkup() : ""}
+      </div>
+    `).join("");
+
+    const addRow = document.getElementById("addBuiltinRow");
+    if(addRow){
+      const missing = ["name","age","phone"].filter(k => !fields.some(f=>f.builtin===k));
+      addRow.innerHTML = missing.map(k => `
+        <button class="mini-btn" type="button" onclick="addBuiltinField('${k}')">+ Add ${BUILTIN_FIELD_DEFAULTS[k].label} Field</button>
+      `).join("");
+    }
+    wireServiceManager();
+  }
+  renderFieldsList();
+
+  function serviceManagerMarkup(){
+    const builtinChips = SERVICES.map(s => `<span class="chip" style="pointer-events:none;opacity:.75;">${SERVICE_ICONS[s]||""} ${s}</span>`).join("");
+    const customRows = customServices.map((s,i) => `
+      <div class="book-card glass" style="padding:8px 12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span>${s.icon} ${s.name} <small class="hint" style="display:inline;">(${s.category})</small></span>
+        <button class="mini-btn" style="flex:none;color:var(--red);border-color:var(--red);" onclick="removeCustomService(${i})">✕</button>
+      </div>
+    `).join("");
+    return `
+      <div class="divider" style="margin:14px 0 8px;">Services</div>
+      <small class="hint">Default services (always available, can't be removed):</small>
+      <div class="chip-row" style="margin:8px 0 12px;">${builtinChips}</div>
+      ${customServices.length ? `<small class="hint">Your added services:</small><div style="margin-top:8px;">${customRows}</div>` : ""}
+      <label>New Service Name</label>
+      <input id="newSvcName" type="text" placeholder="e.g. Kids Cut" />
+      <label>Icon (emoji)</label>
+      <input id="newSvcIcon" type="text" placeholder="e.g. 🧒" maxlength="4" />
+      <label>Time Category</label>
+      <select id="newSvcCat">
+        <option value="haircut">Haircut hours</option>
+        <option value="facial">Facial hours</option>
+      </select>
+      <div class="err" id="svcErr"></div>
+      <button class="btn secondary" type="button" id="addSvcBtn">+ Add Service</button>
+    `;
+  }
+
+  function wireServiceManager(){
+    const addBtn = document.getElementById("addSvcBtn");
+    if(!addBtn) return;
+    addBtn.onclick = async () => {
+      const name = document.getElementById("newSvcName").value.trim();
+      const icon = document.getElementById("newSvcIcon").value.trim() || "✨";
+      const cat = document.getElementById("newSvcCat").value;
+      const errEl = document.getElementById("svcErr");
+      errEl.style.display = "none";
+      if(!name){
+        errEl.textContent = "Enter a service name.";
+        errEl.style.display = "block";
+        return;
+      }
+      if(effectiveServices().includes(name)){
+        errEl.textContent = "That service already exists.";
+        errEl.style.display = "block";
+        return;
+      }
+      const updated = [...customServices, {name, icon, category:cat}];
+      await getSettingsDoc().set({customServices: updated}, {merge:true});
+      customServices = updated;
+      renderFieldsList();
+    };
+  }
+  window.removeCustomService = async (i) => {
+    const updated = customServices.filter((_,idx)=>idx!==i);
+    await getSettingsDoc().set({customServices: updated}, {merge:true});
+    customServices = updated;
+    renderFieldsList();
+  };
+
+  window.moveField = (i, dir) => {
+    const fields = [...cardSettings.fields];
+    const j = i + dir;
+    if(j < 0 || j >= fields.length) return;
+    [fields[i], fields[j]] = [fields[j], fields[i]];
+    persistFields(fields);
+  };
+  window.renameField = (i, value) => {
+    const label = value.trim();
+    const fields = cardSettings.fields.map((f,idx) => idx===i ? {...f, label: label || f.label} : f);
+    persistFields(fields);
+  };
+  window.toggleFieldRequired = (i) => {
+    const target = cardSettings.fields[i];
+    if(target.builtin === "service" || target.builtin === "time") return;
+    const fields = cardSettings.fields.map((f,idx) => idx===i ? {...f, required: !f.required} : f);
+    persistFields(fields);
+  };
+  window.removeField = (i) => {
+    const target = cardSettings.fields[i];
+    if(!target.removable) return;
+    const fields = cardSettings.fields.filter((_,idx) => idx!==i);
+    persistFields(fields);
+  };
+  window.addBuiltinField = (key) => {
+    if(cardSettings.fields.some(f => f.builtin === key)) return;
+    const def = BUILTIN_FIELD_DEFAULTS[key];
+    const newField = { id: key, builtin: key, type: def.type, label: def.label, required: def.required, removable: true };
+    persistFields([...cardSettings.fields, newField]);
+  };
+
+  document.getElementById("addFieldBtn").onclick = async () => {
+    const label = document.getElementById("newFieldLabel").value.trim();
+    const required = document.getElementById("newFieldRequired").checked;
+    const errEl = document.getElementById("fieldErr");
+    errEl.style.display = "none";
+    if(!label){
+      errEl.textContent = "Enter a field label.";
+      errEl.style.display = "block";
+      return;
+    }
+    if(cardSettings.fields.some(f => f.label.toLowerCase() === label.toLowerCase())){
+      errEl.textContent = "That field already exists.";
+      errEl.style.display = "block";
+      return;
+    }
+    const newField = { id: "cf_" + Date.now() + Math.floor(Math.random()*1000), builtin: null, type: "text", label, required, removable: true };
+    const updated = [...cardSettings.fields, newField];
+    await persistFields(updated);
+    document.getElementById("newFieldLabel").value = "";
+    document.getElementById("newFieldRequired").checked = false;
+  };
+
+  function renderCustomWidgetList(){
+    const list = document.getElementById("customWidgetList");
+    if(!list) return;
+    if(!customWidgets.length){ list.innerHTML = ""; return; }
+    list.innerHTML = customWidgets.map((w,i) => `
+      <div class="book-card glass" style="padding:10px 14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-weight:700;">${w.title}</span>
+          <div style="display:flex;gap:6px;">
+            <label class="switch" style="width:38px;height:22px;">
+              <input type="checkbox" ${w.enabled ? "checked" : ""} onchange="toggleWidget(${i})" />
+              <span class="slider"></span>
+            </label>
+            <button class="mini-btn" style="flex:none;color:var(--red);border-color:var(--red);" onclick="removeWidget(${i})">✕</button>
+          </div>
+        </div>
+        <p class="hint" style="margin-top:6px;">${w.text}</p>
+      </div>
+    `).join("");
+  }
+  renderCustomWidgetList();
+
+  document.getElementById("addWidgetBtn").onclick = async () => {
+    const title = document.getElementById("newWidgetTitle").value.trim();
+    const text = document.getElementById("newWidgetText").value.trim();
+    const errEl = document.getElementById("widgetErr");
+    errEl.style.display = "none";
+    if(!title || !text){
+      errEl.textContent = "Fill both title and message.";
+      errEl.style.display = "block";
+      return;
+    }
+    const updated = [...customWidgets, {title, text, enabled:true}];
+    await getSettingsDoc().set({customWidgets: updated}, {merge:true});
+    customWidgets = updated;
+    document.getElementById("newWidgetTitle").value = "";
+    document.getElementById("newWidgetText").value = "";
+    renderCustomWidgetList();
+  };
+
+  window.toggleWidget = async (i) => {
+    const updated = customWidgets.map((w,idx)=> idx===i ? {...w, enabled: !w.enabled} : w);
+    await getSettingsDoc().set({customWidgets: updated}, {merge:true});
+    customWidgets = updated;
+  };
+  window.removeWidget = async (i) => {
+    const updated = customWidgets.filter((_,idx)=>idx!==i);
+    await getSettingsDoc().set({customWidgets: updated}, {merge:true});
+    customWidgets = updated;
+    renderCustomWidgetList();
+  };
+}
+
 function renderAdmin(){
   setActive();
   if(!isOwner){
     app.innerHTML = `
       <div class="glass login-box">
-        <h2 style="font-size:18px;margin-bottom:14px;">Owner Login</h2>
+        <h2 style="font-size:20px;margin-bottom:4px;">${siteBranding.ownerWelcomeText}</h2>
+        <p class="hint" style="margin-bottom:14px;">Enter password to continue</p>
         <label>Password</label>
-        <input id="ownerPass" type="password" placeholder="Enter owner password" />
+        <div style="position:relative;">
+          <input id="ownerPass" type="password" placeholder="Enter owner password" style="padding-right:52px;" />
+          <button type="button" id="togglePassBtn" class="mini-btn" style="position:absolute;right:6px;top:50%;transform:translateY(-50%);flex:none;padding:4px 10px;">Show</button>
+        </div>
         <div class="err" id="loginErr"></div>
         <button class="btn" id="loginBtn">Login</button>
       </div>
     `;
+    document.getElementById("togglePassBtn").onclick = () => {
+      const pw = document.getElementById("ownerPass");
+      const btn = document.getElementById("togglePassBtn");
+      const showing = pw.type === "text";
+      pw.type = showing ? "password" : "text";
+      btn.textContent = showing ? "Show" : "Hide";
+    };
     document.getElementById("loginBtn").onclick = async () => {
       const val = document.getElementById("ownerPass").value;
       const btn = document.getElementById("loginBtn");
@@ -671,6 +1767,9 @@ function renderAdmin(){
   }
 
   if(adminSubView === "settings"){ renderAdminSettings(); return; }
+  if(adminSubView === "slots"){ renderAdminSlots(); return; }
+  if(adminSubView === "reviews"){ renderAdminReviews(); return; }
+  if(adminSubView === "customize"){ renderAdminCustomize(); return; }
 
   app.innerHTML = `
     <div class="glass">
@@ -692,12 +1791,27 @@ function renderAdmin(){
     </div>
     <input class="search-box" id="searchPhone" type="text" placeholder="Search by phone number" style="background:#0a0f18;border:1px solid rgba(255,255,255,0.08);color:var(--text);padding:12px 14px;border-radius:10px;width:100%;" />
     <div id="bookingsList"></div>
-    <div style="display:flex; gap:10px; margin-top:20px;">
-      <button class="btn secondary" id="settingsBtn" style="margin-top:0;">⚙ Settings</button>
-      <button class="btn secondary" id="logoutBtn" style="margin-top:0;">Log Out</button>
+    <div style="display:flex; gap:10px; margin-top:20px; flex-wrap:wrap;">
+      <button class="btn secondary" id="slotsBtn" style="margin-top:0; flex:1; min-width:100px;">🔒 Slots</button>
+      <button class="btn secondary" id="reviewsBtn" style="margin-top:0; flex:1; min-width:100px;">★ Reviews</button>
+      <button class="btn secondary" id="customizeBtn" style="margin-top:0; flex:1; min-width:100px;">🎨 Customize</button>
+      <button class="btn secondary" id="settingsBtn" style="margin-top:0; flex:1; min-width:100px;">⚙ Settings</button>
+      <button class="btn secondary" id="logoutBtn" style="margin-top:0; flex:1; min-width:100px;">Log Out</button>
     </div>
   `;
 
+  document.getElementById("slotsBtn").onclick = () => {
+    adminSubView = "slots";
+    renderAdmin();
+  };
+  document.getElementById("reviewsBtn").onclick = () => {
+    adminSubView = "reviews";
+    renderAdmin();
+  };
+  document.getElementById("customizeBtn").onclick = () => {
+    adminSubView = "customize";
+    renderAdmin();
+  };
   document.getElementById("settingsBtn").onclick = () => {
     adminSubView = "settings";
     renderAdmin();
@@ -764,18 +1878,26 @@ function renderBookingsList(filterPhone){
         <div class="book-status st-${b.status}">${b.status}</div>
       </div>
       <div class="book-meta">
-        ${b.name} · Age ${b.age} · ${b.phone}<br/>
+        ${[b.name, (b.age ? `Age ${b.age}` : null), b.phone].filter(Boolean).join(" · ")}<br/>
         ${b.service} · ${b.slot}
+        ${(b.customFields && b.customFields.length) ? b.customFields.map(f => `<br/><span style="color:var(--cyan);">${f.label}: ${f.value}</span>`).join("") : ""}
       </div>
       <div class="book-actions">
         <button class="mini-btn ${b.status==='confirmed'?'on':''}" onclick="updateStatus('${b.id}','confirmed')">Confirm</button>
         <button class="mini-btn ${b.status==='pending'?'on':''}" onclick="updateStatus('${b.id}','pending')">Pending</button>
         <button class="mini-btn ${b.status==='completed'?'on':''}" onclick="updateStatus('${b.id}','completed')">Done</button>
         <button class="mini-btn ${b.status==='cancelled'?'on':''}" onclick="updateStatus('${b.id}','cancelled')">Cancel</button>
+        <button class="mini-btn" style="color:var(--red);border-color:var(--red);" onclick="deleteBooking('${b.id}')">🗑 Delete</button>
       </div>
     </div>
   `).join("");
 }
+
+function deleteBooking(id){
+  if(!confirm("Delete this booking permanently?")) return;
+  db.collection("bookings").doc(id).delete();
+}
+window.deleteBooking = deleteBooking;
 
 function updateStatus(id, status){
   db.collection("bookings").doc(id).update({status});
@@ -783,13 +1905,21 @@ function updateStatus(id, status){
 window.updateStatus = updateStatus;
 
 function render(){
-  if(unsubscribe && view==="book"){ unsubscribe(); unsubscribe=null; }
-  if(settingsUnsub && view!=="book"){ settingsUnsub(); settingsUnsub=null; }
-  if(bookingUnsub && view!=="book"){ bookingUnsub(); bookingUnsub=null; }
+  if(view!=="book"){
+    if(settingsUnsub){ settingsUnsub(); settingsUnsub=null; }
+    if(bookingUnsub){ bookingUnsub(); bookingUnsub=null; }
+    if(slotsUnsub){ slotsUnsub(); slotsUnsub=null; }
+    if(reviewsUnsub){ reviewsUnsub(); reviewsUnsub=null; }
+    if(fridayCheckInterval){ clearInterval(fridayCheckInterval); fridayCheckInterval=null; }
+  }
+  if(unsubscribe && view!=="admin"){ unsubscribe(); unsubscribe=null; }
+  unsubscribeCurrentCards();
   if(view === "book") renderBook();
+  else if(view === "history") renderHistory();
   else renderAdmin();
 }
 render();
+startScheduleSync();
 </script>
 </body>
 </html>
